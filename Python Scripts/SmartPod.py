@@ -5,6 +5,24 @@ import mysql.connector
 from mysql.connector import Error
 from picamera import PiCamera
 from time import sleep
+from flask import request
+import requests
+import json
+
+def postTemperature(temperature):
+    payload = {"plant_id" : 1, "unit" : "celsius", "value" : str(temperature), "type" : "temperature"}
+    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    print(r.text)
+    
+def postHumidityAir(humidity):
+    payload = {"plant_id" : 1, "unit" : "percent", "value" : str(humidity), "type" : "humidity_air"}
+    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    print(r.text)
+    
+def postHumiditySoil(humidity):
+    payload = {"plant_id" : 1, "unit" : "percent", "value" : str(humidity), "type" : "humidity_soil"}
+    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    print(r.text)
 
 def writeToFile(text):
     file = open("data_water.txt","a") 
@@ -74,13 +92,16 @@ while 1:
                 humidity_air=float(values[1])
                 temperature=values[2];
                 print(timestamp+"- pot humidity: "+str(humidity_pot)+" air humidity: "+str(humidity_air)+" temperature: "+str(temperature))
-             
+                postTemperature(str(temperature).rstrip());
+                postHumidityAir(str(humidity_air));
+                postHumiditySoil(str(humidity_pot));
                 #writeToFile(str(getTime())+" - "+line.decode('utf-8'))
             
-                insertVariblesIntoTable(timestamp,1,humidity_pot)
+                #insertVariblesIntoTable(timestamp,1,humidity_pot)
                 takePicture(plantid,timestamp)
                 time.sleep(300)
             except SerialException:
                 print ("error ")
         
+
 
