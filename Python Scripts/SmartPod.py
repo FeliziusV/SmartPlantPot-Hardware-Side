@@ -4,6 +4,7 @@ import os
 import requests
 import json
 import ftplib
+import SmartPodConfig as cfg
 from datetime import datetime
 from picamera import PiCamera
 from time import sleep
@@ -11,23 +12,23 @@ from flask import request
 
 #uploads temperature value to server
 def postTemperature(temperature):
-    payload = {"plant_id" : 1, "unit" : "celsius", "value" : str(temperature), "type" : "temperature"}
-    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    payload = {"plant_id" : cfg.general['plantId'], "unit" : "celsius", "value" : str(temperature), "type" : "temperature"}
+    r = requests.post(cfg.general['serverUrl'], json=payload)
 
 #uploads air-humidity value to server
 def postHumidityAir(humidity):
-    payload = {"plant_id" : 1, "unit" : "percent", "value" : str(humidity), "type" : "humidity_air"}
-    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_air"}
+    r = requests.post(cfg.general['serverUrl'], json=payload)
 
 #uploads soil-humidity value to server
 def postHumiditySoil(humidity):
-    payload = {"plant_id" : 1, "unit" : "percent", "value" : str(humidity), "type" : "humidity_soil"}
-    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_soil"}
+    r = requests.post(cfg.general['serverUrl'], json=payload)
 
 #uploads image name to server
 def postImageName(name):
-    payload = {"plant_id" : 1, "value" : str(name)}
-    r = requests.post('http://www.trabby.at/spp/api/measurement/create.php', json=payload)
+    payload = {"plant_id" : cfg.general['plantId'], "value" : str(name)}
+    r = requests.post(cfg.general['serverUrl'], json=payload)
 
 #returns current time
 def getTime():
@@ -47,7 +48,7 @@ def takePicture(plantid,date):
     camera.stop_preview()
     camera.close()
     
-    session =ftplib.FTP('www12.world4you.com','ftp5166141_felix','felix12345')
+    session =ftplib.FTP(cfg.general['ftpUrl'],cfg.general['ftpUser'],cfg.general['ftpPassword'])
     file= open("Images/"+name+".jpg",'rb')
     session.storbinary("STOR images/"+name+".jpg",file)
     file.close()
@@ -56,8 +57,8 @@ def takePicture(plantid,date):
     os.remove("Images/"+name+".jpg")
 
 #-----------------main logic -----------------------
-ser = serial.Serial('/dev/ttyACM0', 9600)
-plantid=1;
+ser = serial.Serial(cfg.general['serialId'], 9600)
+plantid=cfg.general['plantId'];
 
 while 1: 
     if ser.readline()!=None:
@@ -75,6 +76,7 @@ while 1:
                 postHumidityAir(str(humidity_air));
                 postHumiditySoil(str(humidity_pot));
                 takePicture(plantid,timestamp)
+                
                 time.sleep(300)
                 
             except SerialException:
