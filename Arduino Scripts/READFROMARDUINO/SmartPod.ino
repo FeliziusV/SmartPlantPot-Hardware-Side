@@ -13,7 +13,7 @@ dht.begin();
 
 }
 void loop() {
-delay(2000);
+delay(4000);
 
 liquid_level= analogRead(sensorPin); //arduino reads the value from the
 
