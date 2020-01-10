@@ -36,6 +36,8 @@ For the SmartPod.py script, some external Python packages need to be installed:
 
      * [Picamera](https://picamera.readthedocs.io/en/release-1.13/): Picamera is a package that provides a Python 
      interface to the Raspberry Pi camera.
+     
+     * [Flask](https://www.fullstackpython.com/flask.html): A Python web framework
 
 * [Arduino IDE](https://www.arduino.cc/en/Main/Software): The Arduino IDE is a software to develop and upload scripts to the Arduino. Before using the SmpartPod Arduino script the following libraries need to be installed with the Arduino Libary Manager:
 
