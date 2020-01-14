@@ -78,9 +78,12 @@ while 1:
                 takePicture(plantid,timestamp)
                 
                 time.sleep(300)
-                
-            except SerialException:
+            except requests.exceptions.Timeout:
+                print("Connection error")
+                continue
+            except serial.SerialException:
                 print ("Serial Error")
+                continue
         
 
 
