@@ -13,23 +13,22 @@ from flask import request
 #uploads temperature value to server
 def postTemperature(temperature):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "celsius", "value" : str(temperature), "type" : "temperature"}
-    r = requests.post(cfg.general['serverUrl'], json=payload)
+    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
 
 #uploads air-humidity value to server
 def postHumidityAir(humidity):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_air"}
-    r = requests.post(cfg.general['serverUrl'], json=payload)
+    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
 
 #uploads soil-humidity value to server
 def postHumiditySoil(humidity):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_soil"}
-    r = requests.post(cfg.general['serverUrl'], json=payload)
+    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
 
 #uploads image name to server
 def postImageName(name):
-    payload = {"plant_id" : cfg.general['plantId'], "value" : str(name)}
-    r = requests.post(cfg.general['serverUrl'], json=payload)
-
+    payload = {"plant_id" : cfg.general['plantId'], "path" : cfg.general['serverUrlImageFolder']+str(name)}
+    r = requests.post(cfg.general['serverUrlImage'], json=payload)
 #returns current time
 def getTime():
     dateTimeObj = datetime.now()
@@ -55,6 +54,8 @@ def takePicture(plantid,date):
     session.quit()
     print("image uploaded")
     os.remove("Images/"+name+".jpg")
+    postImageName(name+".jpg")
+    
 
 #-----------------main logic -----------------------
 ser = serial.Serial(cfg.general['serialId'], 9600)
@@ -67,7 +68,7 @@ while 1:
                 line =line.decode('utf-8')
                 timestamp=getTime()
                 values=line.split(" ")
-                humidity_pot=int(values[0])/1023*100
+                humidity_pot=float(values[0])/1023*100
                 humidity_pot=round(humidity_pot,2)
                 humidity_air=float(values[1])
                 temperature=values[2];
