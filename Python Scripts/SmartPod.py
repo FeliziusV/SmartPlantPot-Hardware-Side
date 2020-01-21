@@ -13,22 +13,22 @@ from flask import request
 #uploads temperature value to server
 def postTemperature(temperature):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "celsius", "value" : str(temperature), "type" : "temperature"}
-    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
+    r = requests.post(cfg.general['apiCreateMeasurementUrl'], json=payload)
 
 #uploads air-humidity value to server
 def postHumidityAir(humidity):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_air"}
-    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
+    r = requests.post(cfg.general['apiCreateMeasurementUrl'], json=payload)
 
 #uploads soil-humidity value to server
 def postHumiditySoil(humidity):
     payload = {"plant_id" : cfg.general['plantId'], "unit" : "percent", "value" : str(humidity), "type" : "humidity_soil"}
-    r = requests.post(cfg.general['serverUrlMeasurement'], json=payload)
+    r = requests.post(cfg.general['apiCreateMeasurementUrl'], json=payload)
 
 #uploads image name to server
 def postImageName(name):
-    payload = {"plant_id" : cfg.general['plantId'], "path" : cfg.general['serverUrlImageFolder']+str(name)}
-    r = requests.post(cfg.general['serverUrlImage'], json=payload)
+    payload = {"plant_id" : cfg.general['plantId'], "path" : cfg.general['serverImageFolderUrl']+str(name)}
+    r = requests.post(cfg.general['apiCreateImageUrl'], json=payload)
 #returns current time
 def getTime():
     dateTimeObj = datetime.now()
@@ -47,7 +47,7 @@ def takePicture(plantid,date):
     camera.stop_preview()
     camera.close()
     
-    session =ftplib.FTP(cfg.general['ftpUrl'],cfg.general['ftpUser'],cfg.general['ftpPassword'])
+    session =ftplib.FTP(cfg.general['ftpServerUrl'],cfg.general['ftpServerUser'],cfg.general['ftpServerPassword'])
     file= open("Images/"+name+".jpg",'rb')
     session.storbinary("STOR images/"+name+".jpg",file)
     file.close()
