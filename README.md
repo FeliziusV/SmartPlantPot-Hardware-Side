@@ -115,10 +115,12 @@ Before executing the "SmartPod.py" script the "SmartPodConfig" file in the Folde
 
 * serialId :  depending on on which USB port the Arduino is connect ('/dev/ttyACM1' or '/dev/ttyACM0')
 * plantId : the Id of the plant
-* serverUrl : the Url of the server api
-* ftpUrl : The Url of the stp-server 
-* ftpUser : The Username of the ftp-server
-* ftpPassword : The Password of the ftp-server User
+* apiCreateMeasurementUrl: the Url of the create.php file for the measurements
+* apiCreateImageUrl: the Url of the create.php file for images
+* serverImageFolderUrl : The Url of the Image Folder on the Server
+* ftpServerUrl : The Url of the ftp-server 
+* ftpServerUser : The Username of the ftp-server
+* ftpServerPassword : The Password of the ftp-server User
 
 ### Step 8: Run the "SmartPod.py" Script
 After all the steps above the "SmartPod.py" script in the Folder "Python Scripts" can be executed. 
