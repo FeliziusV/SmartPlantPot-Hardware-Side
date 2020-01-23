@@ -4,7 +4,7 @@ import os
 import requests
 import json
 import ftplib
-import SmartPodConfig as cfg
+import SmartPlantPotConfig as cfg
 from datetime import datetime
 from picamera import PiCamera
 from time import sleep
