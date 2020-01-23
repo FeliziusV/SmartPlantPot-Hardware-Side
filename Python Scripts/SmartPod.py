@@ -80,11 +80,17 @@ while 1:
                 
                 time.sleep(300)
             except requests.exceptions.Timeout:
-                print("Connection error")
+                print("Connection Timeout")
+                print("retry")
+                time.sleep(5)
                 continue
             except serial.SerialException:
                 print ("Serial Error")
+                time.sleep(5)
                 continue
-        
+            except requests.exceptions.ConnectionError:
+                print("Connection Error")
+                time.sleep(5)
+                continue
 
 
