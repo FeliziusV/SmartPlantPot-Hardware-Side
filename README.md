@@ -1,6 +1,6 @@
-# The SmartPod Hardware-Side:
+# The SmartPlantPod Hardware-Side:
 
-The Hardware-Side of the SmartPod system consists of a Raspberry Pi, an Arduino microcontroller,  a camera, and sensors. The sensors are connected on the Arduino board and the Raspberry Pi sends the collected data received from the Arduino to a Server. 
+The Hardware-Side of the SmartPlantPod system consists of a Raspberry Pi, an Arduino microcontroller,  a camera, and sensors. The sensors are connected on the Arduino board and the Raspberry Pi sends the collected data received from the Arduino to a Server. 
 
 ![The SmartPod Hardware-Side](https://github.com/FeliziusV/SmartPod-Hardware-Side/blob/master/Wiki/images/IMG_1799.jpg)
 
@@ -107,11 +107,11 @@ note: the Arduino Leonardo is equipped with only one 5V output. So the 5V output
 
 ![breadboard](https://github.com/FeliziusV/SmartPod-Hardware-Side/blob/master/Wiki/images/IMG_1813.jpg)
 
-### Step 6: Upload the "SmartPod.ino" Script to the Arduino
-The "SmartPod.ino" script in the "Arduino Scripts" folder needs to be uploaded to the Arduino. To do so the "SmartPod.ino" file needs to be opened with the Arduino IDE. After this, the Arduino Board and Port need to be configured. This has to be done in the "Tools" tab. Now the Script can be uploaded to the Arduino. After the upload, the script runs on the Arduino. To check if the script is able to read the sensor data the build-in Serial Monitor should be executed.
+### Step 6: Upload the "SmartPlantPod.ino" Script to the Arduino
+The "SmartPlantPod.ino" script in the "Arduino Scripts" folder needs to be uploaded to the Arduino. To do so the "SmartPod.ino" file needs to be opened with the Arduino IDE. After this, the Arduino Board and Port need to be configured. This has to be done in the "Tools" tab. Now the Script can be uploaded to the Arduino. After the upload, the script runs on the Arduino. To check if the script is able to read the sensor data the build-in Serial Monitor should be executed.
 
 ### Step 7: Edit the configuration File
-Before executing the "SmartPod.py" script the "SmartPodConfig" file in the Folder "Python Scripts"needs to be edited as followed:
+Before executing the "SmartPlantPod.py" script the "SmartPlantPodConfig" file in the Folder "Python Scripts"needs to be edited as followed:
 
 * serialId :  depending on on which USB port the Arduino is connect ('/dev/ttyACM1' or '/dev/ttyACM0')
 * plantId : the Id of the plant
@@ -122,8 +122,8 @@ Before executing the "SmartPod.py" script the "SmartPodConfig" file in the Folde
 * ftpServerUser : The Username of the ftp-server
 * ftpServerPassword : The Password of the ftp-server User
 
-### Step 8: Run the "SmartPod.py" Script
-After all the steps above the "SmartPod.py" script in the Folder "Python Scripts" can be executed. 
+### Step 8: Run the "SmartPlantPod.py" Script
+After all the steps above the "SmartPlantPod.py" script in the Folder "Python Scripts" can be executed. 
 
 Now the Script should send the data received from the Arduino to the Server. 
 
